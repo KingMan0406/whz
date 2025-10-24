@@ -33,11 +33,12 @@ export default function StudentDashboard({ onNavigate }: StudentDashboardProps) 
   ];
 
   const quickActions = [
-    { icon: Calendar, label: 'Timetable', screen: 'mensa-timetable' },
-    { icon: Users, label: 'Social Wall', screen: 'social' },
-    { icon: MessageSquare, label: 'Ask Pixi', screen: 'pixi' },
-    { icon: Home, label: 'My Space', screen: 'events' },
-  ];
+  { icon: Calendar, label: 'Timetable', screen: 'mensa-timetable' },
+  { icon: Users, label: 'Social Wall', externalLink: 'https://app.slack.com/client/T09P1CYEF4G/C09N47EK70T' },
+  { icon: MessageSquare, label: 'Ask Pixi', screen: 'pixi' },
+  { icon: Home, label: 'My Space', screen: 'events' },
+];
+
 
   const nextSlide = () => {
     setCarouselIndex((prev) => (prev + 1) % carouselItems.length);
@@ -123,7 +124,14 @@ export default function StudentDashboard({ onNavigate }: StudentDashboardProps) 
             {quickActions.map((action, index) => (
               <motion.button
                 key={action.label}
-                onClick={() => onNavigate(action.screen)}
+                onClick={() => {
+  if (action.externalLink) {
+    window.open(action.externalLink, '_blank');
+  } else {
+    onNavigate(action.screen);
+  }
+}}
+
                 className="flex flex-col items-center gap-2"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -164,7 +172,10 @@ export default function StudentDashboard({ onNavigate }: StudentDashboardProps) 
               </div>
             </Card>
 
-            <Card className="p-4 cursor-pointer hover:shadow-md transition-shadow" onClick={() => onNavigate('social')}>
+<Card
+  className="p-4 cursor-pointer hover:shadow-md transition-shadow"
+  onClick={() => window.open('https://app.slack.com/client/T09P1CYEF4G/C09N47EK70T', '_blank')}
+>
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center flex-shrink-0">
                   <Users className="w-5 h-5 text-white" />

@@ -11,7 +11,7 @@ export default function BottomNav({ currentScreen, onNavigate, notificationCount
   const navItems = [
     { id: 'dashboard', icon: Home, label: 'Home' },
     { id: 'events', icon: Calendar, label: 'Events' },
-    { id: 'social', icon: Users, label: 'Social' },
+    { id: 'social', icon: Users, label: 'Social', externalLink: 'https://app.slack.com/client/T09P1CYEF4G/C09N47EK70T' },
     { id: 'pixi', icon: MessageSquare, label: 'Pixi' },
     { id: 'profile', icon: User, label: 'Profile' },
   ];
@@ -27,7 +27,13 @@ export default function BottomNav({ currentScreen, onNavigate, notificationCount
             return (
               <button
                 key={item.id}
-                onClick={() => onNavigate(item.id)}
+                onClick={() => {
+  if (item.externalLink) {
+    window.open(item.externalLink, '_blank');
+  } else {
+    onNavigate(item.id);
+  }
+}}
                 className="relative flex flex-col items-center gap-1 px-4 py-1"
               >
                 <div className="relative">
